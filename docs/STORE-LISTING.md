@@ -92,7 +92,7 @@ Productivity / 生产力工具
 
 ## 隐私政策网址
 
-仓库公开后可使用：
+使用：
 
 ```text
 https://github.com/zhijinallin/wechat-article-exporter/blob/main/PRIVACY.md

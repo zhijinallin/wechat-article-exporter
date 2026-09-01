@@ -4,7 +4,7 @@
 
 ## 唯一正式项目
 
-计划使用的 GitHub 仓库：
+正式 GitHub 仓库：
 
 ```text
 https://github.com/zhijinallin/wechat-article-exporter

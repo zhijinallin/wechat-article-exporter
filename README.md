@@ -25,6 +25,8 @@
 
 ## 两种发行方式
 
+最新发行包下载：<https://github.com/zhijinallin/wechat-article-exporter/releases/latest>
+
 运行 `./scripts/package.sh` 后，会在本机 `dist/` 目录生成：
 
 1. `wechat-article-exporter-v版本号-friends-unpacked.zip`
@@ -67,6 +69,6 @@ test/                  不访问微信的本地测试页面
 
 ## 项目主页
 
-计划长期维护于：<https://github.com/zhijinallin/wechat-article-exporter>
+长期维护于：<https://github.com/zhijinallin/wechat-article-exporter>
 
 本项目与腾讯、微信或微信公众平台没有隶属、授权或官方合作关系。

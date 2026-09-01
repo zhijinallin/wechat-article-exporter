@@ -62,7 +62,7 @@ ZIP 打开后，`manifest.json` 必须直接位于最外层。本项目的打包
 https://github.com/zhijinallin/wechat-article-exporter/blob/main/PRIVACY.md
 ```
 
-只有当 GitHub 仓库公开后，这个地址才能作为公开隐私政策网址。若仓库保持私有，需要另外发布一个公开的隐私政策页面。
+GitHub 仓库已经公开，因此这个地址可以作为公开隐私政策网址。正式提交前请在未登录 GitHub 的窗口中再打开一次，确认可以访问。
 
 ## 第五步：选择发布范围
 

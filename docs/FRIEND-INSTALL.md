@@ -4,6 +4,10 @@
 
 整个过程大约需要 2 分钟。
 
+正式下载地址：<https://github.com/zhijinallin/wechat-article-exporter/releases/latest>
+
+在最新版本的 Assets 中，下载文件名包含 `friends-unpacked.zip` 的文件。
+
 ## 第一步：解压 ZIP
 
 双击收到的 ZIP 文件。解压后会得到一个类似下面的文件夹：

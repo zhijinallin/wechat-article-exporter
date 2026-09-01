@@ -1,0 +1,140 @@
+:root {
+  color-scheme: light;
+  font-family:
+    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f6f7f9;
+  color: #172033;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  margin: 0;
+}
+
+main {
+  padding: 18px;
+}
+
+header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.mark {
+  display: grid;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 11px;
+  background: #087f5b;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 750;
+}
+
+h1 {
+  margin: 1px 0 4px;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+header p,
+footer,
+.status,
+.article-card span {
+  margin: 0;
+  color: #697386;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.article-card {
+  display: grid;
+  gap: 5px;
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid #dde2ea;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.article-card[hidden] {
+  display: none;
+}
+
+.article-card strong {
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+button {
+  min-height: 38px;
+  border: 1px solid #cfd6e1;
+  border-radius: 10px;
+  background: #fff;
+  color: #253047;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+button.primary {
+  grid-column: 1 / -1;
+  border-color: #087f5b;
+  background: #087f5b;
+  color: #fff;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(0.97);
+}
+
+button:focus-visible {
+  outline: 3px solid rgb(8 127 91 / 24%);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.status {
+  min-height: 38px;
+  margin-top: 12px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: #e9edf3;
+}
+
+.status.success {
+  background: #dff7eb;
+  color: #076a4c;
+}
+
+.status.error {
+  background: #ffebeb;
+  color: #a52a2a;
+}
+
+footer {
+  margin-top: 12px;
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>微信文章本地导出器</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="mark" aria-hidden="true">文</span>
+        <div>
+          <h1>微信文章本地导出器</h1>
+          <p>只读取你主动打开并点击导出的当前标签页。</p>
+        </div>
+      </header>
+
+      <section id="article-card" class="article-card" hidden>
+        <strong id="article-title"></strong>
+        <span id="article-meta"></span>
+      </section>
+
+      <div class="actions">
+        <button id="export-html" class="primary" type="button" disabled>
+          下载完整 HTML
+        </button>
+        <button id="download-markdown" type="button" disabled>
+          下载 Markdown
+        </button>
+        <button id="copy-markdown" type="button" disabled>
+          复制 Markdown
+        </button>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite">
+        正在检查当前页面…
+      </p>
+
+      <footer>
+        HTML 会尽量内嵌正文图片，适合上传给 AI；Markdown 体积更小。
+      </footer>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

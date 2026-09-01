@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      property="og:title"
+      content="微信文章导出器端到端测试：Agent 规划与循环"
+    />
+    <meta
+      property="og:description"
+      content="用于验证微信文章本地导出器，不访问任何微信页面。"
+    />
+    <meta
+      property="og:url"
+      content="https://mp.weixin.qq.com/s/local-smoke-test"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>微信文章本地导出器 · 测试夹具</title>
+    <link rel="stylesheet" href="../popup.css" />
+    <style>
+      .fixture {
+        position: absolute;
+        left: -10000px;
+        width: 800px;
+      }
+    </style>
+    <script src="./harness-bootstrap.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="mark" aria-hidden="true">文</span>
+        <div>
+          <h1>微信文章本地导出器</h1>
+          <p>本页只用于本地端到端测试。</p>
+        </div>
+      </header>
+
+      <section id="article-card" class="article-card" hidden>
+        <strong id="article-title"></strong>
+        <span id="article-meta"></span>
+      </section>
+
+      <div class="actions">
+        <button id="export-html" class="primary" type="button" disabled>
+          下载完整 HTML
+        </button>
+        <button id="download-markdown" type="button" disabled>
+          下载 Markdown
+        </button>
+        <button id="copy-markdown" type="button" disabled>
+          复制 Markdown
+        </button>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite">
+        正在检查当前页面…
+      </p>
+    </main>
+
+    <aside class="fixture" aria-hidden="true">
+      <span id="js_name">测试公众号</span>
+      <span id="publish_time">2026年7月30日 18:00</span>
+      <article id="js_content">
+        <h2>先讲清楚：什么是长程任务</h2>
+        <p>
+          一次生成只调用一次模型；长程任务则需要先规划，再按章节循环执行，并依据检查结果回到上一步。
+        </p>
+        <p>
+          <strong>规划、执行、检查、修订</strong>构成最小闭环。
+          <a href="javascript:alert('unsafe')">不安全链接</a>
+        </p>
+        <img
+          data-src="http://mmbiz.qpic.cn/smoke-test/diagram.svg"
+          alt="长程任务运行环"
+          onerror="alert('unsafe')"
+          style="width: 640px; background-image: url(https://unsafe.example/a.png)"
+        />
+        <iframe data-src="https://v.qq.com/x/page/test.html"></iframe>
+        <button type="button">不应被导出</button>
+      </article>
+    </aside>
+
+    <script type="module" src="../popup.js?test=legacy-url-support"></script>
+  </body>
+</html>

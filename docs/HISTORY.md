@@ -1,0 +1,10 @@
+# 项目历史
+
+- 2026-07-30：创建“微信文章本地导出器”初版；
+- 原始目录：`/Users/huangzhijin/Desktop/E4 标书/agbid/tools/wechat-article-exporter`；
+- 2026-09-01：从本地 Git 备份提交 `bdadcbd3df5d039fe5aff45720227fd07801d427` 恢复原始代码；
+- 2026-09-01：项目所有者在 Chrome 中重新加载，并确认真实微信公众号文章可以正常导出；
+- 2026-09-01：迁移到独立长期维护目录，补充发行、隐私、商店和维护材料。
+- 2026-09-01：使用指定文章“表达者红利和价值索取”重新实测并取得说明截图，替换早期测试文章截图。
+
+原始恢复时的文件校验记录保存在 `docs/history/original-recovery-manifest.sha256`。后续发行包使用 `dist/SHA256SUMS.txt` 记录校验值。

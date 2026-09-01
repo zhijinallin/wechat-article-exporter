@@ -1,0 +1,8 @@
+.DS_Store
+dist/
+output/
+*.crx
+*.pem
+*.key
+*.zip
+__pycache__/

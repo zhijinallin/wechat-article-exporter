@@ -18,7 +18,9 @@
 |---|---|
 | 第一次使用插件 | [使用说明](docs/USER-GUIDE.md) |
 | 收到 ZIP 后手动安装 | [朋友安装指南](docs/FRIEND-INSTALL.md) |
-| 发布到 Chrome 商店 | [Chrome 商店发布指南](docs/WEB-STORE-PUBLISH.md) |
+| 查看 Chrome 商店文档总入口 | [Chrome 商店发布文档](docs/WEB-STORE-PUBLISH.md) |
+| 以后参考通用上架流程 | [Chrome Web Store 上架通用指南](docs/WEB-STORE-PUBLISH-GENERAL.md) |
+| 查看本次首次提交的文案、素材和问题记录 | [v0.1.0 首次提交记录](docs/submissions/2026-09-01-v0.1.0.md) |
 | 维护代码和发布新版 | [长期维护指南](docs/MAINTENANCE.md) |
 | 了解插件处理原理 | [技术说明](docs/TECHNICAL.md) |
 | 查看隐私承诺 | [隐私政策](PRIVACY.md) |
@@ -43,6 +45,7 @@ ZIP 和其他发行产物不直接提交进 Git，由 GitHub Release 长期保�
 
 - 版本：`0.1.0`
 - 状态：已在 Chrome 中重新加载，并由项目所有者于 2026-09-01 确认真正文章可以正常导出。
+- Chrome Web Store：项目所有者已于 2026-09-01 提交审核；审核结果待定，尚未确认发布。
 - Manifest：V3
 - 最低 Chrome 版本：114
 

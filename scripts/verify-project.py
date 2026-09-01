@@ -8,6 +8,7 @@ import struct
 import sys
 import zipfile
 from pathlib import Path
+from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +47,32 @@ def png_color_type(path: Path) -> int:
 def sha256(path: Path) -> str:
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     return digest
+
+
+def verify_markdown_links() -> None:
+    markdown_files = [
+        ROOT / "README.md",
+        ROOT / "PRIVACY.md",
+        ROOT / "CHANGELOG.md",
+        *sorted((ROOT / "docs").rglob("*.md")),
+        *sorted((ROOT / "store-assets").rglob("*.md")),
+    ]
+    link_pattern = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+
+    for path in markdown_files:
+        if not path.is_file():
+            fail(f"缺少文档：{path.relative_to(ROOT)}")
+        text = path.read_text(encoding="utf-8")
+        for match in link_pattern.finditer(text):
+            target = match.group(1).strip().split(maxsplit=1)[0].strip("<>")
+            if not target or target.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            relative_target = unquote(target.split("#", 1)[0])
+            resolved = (path.parent / relative_target).resolve()
+            if not resolved.exists():
+                fail(
+                    f"文档链接失效：{path.relative_to(ROOT)} -> {target}"
+                )
 
 
 def verify_source() -> str:
@@ -98,12 +125,17 @@ def verify_source() -> str:
 
     forbidden = []
     for path in ROOT.rglob("*"):
-        if any(part in {".git", "dist", "output"} for part in path.parts):
+        if any(
+            part in {".git", "dist", "output", "private-evidence"}
+            for part in path.parts
+        ):
             continue
         if path.is_file() and path.suffix.lower() in {".pem", ".key"}:
             forbidden.append(str(path.relative_to(ROOT)))
     if forbidden:
         fail(f"项目中发现私钥文件：{', '.join(forbidden)}")
+
+    verify_markdown_links()
 
     return version
 

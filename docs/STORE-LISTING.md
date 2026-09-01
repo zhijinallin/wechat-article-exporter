@@ -130,3 +130,4 @@ Unlisted
 - 商店图标：`store-assets/store-icon-128.png`
 - 主要截图：`store-assets/screenshot-1280x800.png`
 - 小型宣传图：`store-assets/promo-440x280.png`
+- 顶部宣传图（可选）：`store-assets/marquee-1400x560.png`

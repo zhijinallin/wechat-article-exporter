@@ -36,6 +36,13 @@ def png_size(path: Path) -> tuple[int, int]:
     return struct.unpack(">II", data[16:24])
 
 
+def png_color_type(path: Path) -> int:
+    data = path.read_bytes()
+    if data[:8] != b"\x89PNG\r\n\x1a\n" or len(data) < 26:
+        fail(f"不是有效 PNG：{path.relative_to(ROOT)}")
+    return data[25]
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     return digest
@@ -67,18 +74,27 @@ def verify_source() -> str:
         if actual != (size, size):
             fail(f"icon-{size}.png 尺寸错误：{actual}")
 
+    # PNG color type 6 = RGBA; type 2 = 24-bit RGB without transparency.
     store_assets = {
-        "store-assets/store-icon-128.png": (128, 128),
-        "store-assets/screenshot-1280x800.png": (1280, 800),
-        "store-assets/promo-440x280.png": (440, 280),
+        "store-assets/store-icon-128.png": ((128, 128), 6),
+        "store-assets/screenshot-1280x800.png": ((1280, 800), 2),
+        "store-assets/promo-440x280.png": ((440, 280), 2),
+        "store-assets/marquee-1400x560.png": ((1400, 560), 2),
+        "store-assets/upload-ready/01-store-icon-128x128.png": ((128, 128), 6),
+        "store-assets/upload-ready/02-screenshot-1280x800.png": ((1280, 800), 2),
+        "store-assets/upload-ready/03-small-promo-440x280.png": ((440, 280), 2),
+        "store-assets/upload-ready/04-marquee-1400x560-optional.png": ((1400, 560), 2),
     }
-    for relative, expected_size in store_assets.items():
+    for relative, (expected_size, expected_color_type) in store_assets.items():
         path = ROOT / relative
         if not path.is_file():
             fail(f"缺少商店素材：{relative}")
         actual = png_size(path)
         if actual != expected_size:
             fail(f"商店素材尺寸错误：{relative} = {actual}")
+        actual_color_type = png_color_type(path)
+        if actual_color_type != expected_color_type:
+            fail(f"商店素材颜色格式错误：{relative} = PNG color type {actual_color_type}")
 
     forbidden = []
     for path in ROOT.rglob("*"):

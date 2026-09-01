@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -22,7 +23,8 @@ def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype(str(path), size=size)
 
 
-def rounded_icon(size: int) -> Image.Image:
+def extension_icon(size: int) -> Image.Image:
+    """Preserve the icons already shipped inside the v0.1.0 extension ZIP."""
     scale = 4
     canvas = Image.new("RGBA", (size * scale, size * scale), (0, 0, 0, 0))
     draw = ImageDraw.Draw(canvas)
@@ -42,11 +44,38 @@ def rounded_icon(size: int) -> Image.Image:
     return canvas.resize((size, size), Image.Resampling.LANCZOS)
 
 
+def rounded_icon(size: int) -> Image.Image:
+    scale = 4
+    canvas = Image.new("RGB", (size * scale, size * scale), GREEN)
+    draw = ImageDraw.Draw(canvas)
+    alpha = Image.new("L", canvas.size, 0)
+    alpha_draw = ImageDraw.Draw(alpha)
+    inset = max(1, int(size * 0.04)) * scale
+    alpha_draw.rounded_rectangle(
+        (inset, inset, size * scale - inset, size * scale - inset),
+        radius=int(size * 0.24) * scale,
+        fill=255,
+    )
+    text_font = font(int(size * 0.58) * scale, bold=True)
+    box = draw.textbbox((0, 0), "文", font=text_font)
+    width = box[2] - box[0]
+    height = box[3] - box[1]
+    x = (size * scale - width) / 2
+    y = (size * scale - height) / 2 - box[1] - size * scale * 0.015
+    draw.text((x, y), "文", font=text_font, fill="white")
+    resized = canvas.resize((size, size), Image.Resampling.LANCZOS).convert("RGBA")
+    resized.putalpha(alpha.resize((size, size), Image.Resampling.LANCZOS))
+    return resized
+
+
 def create_icons() -> None:
     ICONS.mkdir(parents=True, exist_ok=True)
     for size in (16, 32, 48, 128):
-        rounded_icon(size).save(ICONS / f"icon-{size}.png")
-    rounded_icon(128).save(ASSETS / "store-icon-128.png")
+        extension_icon(size).save(ICONS / f"icon-{size}.png")
+
+    store_icon = Image.new("RGBA", (128, 128), (255, 255, 255, 0))
+    store_icon.alpha_composite(rounded_icon(96), (16, 16))
+    store_icon.save(ASSETS / "store-icon-128.png")
 
 
 def add_shadow(base: Image.Image, box: tuple[int, int, int, int], radius: int = 26) -> None:
@@ -107,16 +136,50 @@ def create_screenshot() -> None:
 
 
 def create_promo() -> None:
-    canvas = Image.new("RGBA", (440, 280), "#eef5f2")
+    canvas = Image.new("RGBA", (440, 280), GREEN)
     draw = ImageDraw.Draw(canvas)
-    canvas.alpha_composite(rounded_icon(72), (32, 34))
-    draw.text((124, 41), "微信文章", font=font(32, True), fill=INK)
-    draw.text((124, 79), "本地导出器", font=font(32, True), fill=INK)
-    draw.rounded_rectangle((32, 142, 408, 230), radius=18, fill="white")
-    draw.text((56, 158), "完整 HTML  ·  Markdown", font=font(23, True), fill=GREEN)
-    draw.text((56, 194), "只在本机处理，不上传文章", font=font(18), fill=MUTED)
-    draw.text((32, 251), "非微信官方产品", font=font(13), fill=MUTED)
+    draw.ellipse((315, -110, 505, 80), fill="#0ca678")
+    draw.rounded_rectangle((26, 26, 114, 114), radius=20, fill="white")
+    canvas.alpha_composite(rounded_icon(64), (38, 38))
+    draw.text((134, 28), "微信文章", font=font(31, True), fill="white")
+    draw.text((134, 67), "本地导出器", font=font(31, True), fill="white")
+    draw.rounded_rectangle((26, 139, 414, 231), radius=19, fill="white")
+    draw.text((50, 154), "完整 HTML  ·  Markdown", font=font(23, True), fill=GREEN)
+    draw.text((50, 193), "只在本机处理，不上传文章", font=font(18), fill="#076a4c")
+    draw.text((26, 253), "非微信官方产品", font=font(13), fill="#b7ebd5")
     canvas.convert("RGB").save(ASSETS / "promo-440x280.png", quality=95)
+
+
+def create_marquee() -> None:
+    canvas = Image.new("RGBA", (1400, 560), GREEN)
+    draw = ImageDraw.Draw(canvas)
+
+    draw.ellipse((1040, -270, 1580, 270), fill="#0ca678")
+    draw.ellipse((1120, 320, 1500, 700), fill="#076a4c")
+    draw.rounded_rectangle((74, 74, 286, 286), radius=44, fill="white")
+    canvas.alpha_composite(rounded_icon(154), (103, 103))
+
+    draw.text((350, 92), "微信文章本地导出器", font=font(58, True), fill="white")
+    draw.text((350, 183), "一键保存完整 HTML 与 Markdown", font=font(38), fill="#dff7eb")
+
+    draw.rounded_rectangle((350, 300, 1135, 430), radius=28, fill="#ffffff")
+    draw.text((390, 325), "保留正文图片  ·  方便 AI 与知识库  ·  本机处理", font=font(30, True), fill=GREEN)
+    draw.text((82, 490), "非微信官方产品", font=font(19), fill="#b7ebd5")
+
+    canvas.convert("RGB").save(ASSETS / "marquee-1400x560.png", quality=95)
+
+
+def create_upload_ready_folder() -> None:
+    upload_ready = ASSETS / "upload-ready"
+    upload_ready.mkdir(parents=True, exist_ok=True)
+    mapping = {
+        "store-icon-128.png": "01-store-icon-128x128.png",
+        "screenshot-1280x800.png": "02-screenshot-1280x800.png",
+        "promo-440x280.png": "03-small-promo-440x280.png",
+        "marquee-1400x560.png": "04-marquee-1400x560-optional.png",
+    }
+    for source_name, target_name in mapping.items():
+        shutil.copy2(ASSETS / source_name, upload_ready / target_name)
 
 
 def main() -> None:
@@ -124,7 +187,9 @@ def main() -> None:
     create_icons()
     create_screenshot()
     create_promo()
-    print("已生成扩展图标和 Chrome 商店图片。")
+    create_marquee()
+    create_upload_ready_folder()
+    print("已生成扩展图标、Chrome 商店图片和直接上传文件夹。")
 
 
 if __name__ == "__main__":

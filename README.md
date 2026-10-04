@@ -21,6 +21,7 @@
 | 查看 Chrome 商店文档总入口 | [Chrome 商店发布文档](docs/WEB-STORE-PUBLISH.md) |
 | 以后参考通用上架流程 | [Chrome Web Store 上架通用指南](docs/WEB-STORE-PUBLISH-GENERAL.md) |
 | 查看本次首次提交的文案、素材和问题记录 | [v0.1.0 首次提交记录](docs/submissions/2026-09-01-v0.1.0.md) |
+| 查看审核通过状态与证据边界 | [v0.1.0 审核通过状态补录](docs/submissions/2026-10-04-v0.1.0-review-approved.md) |
 | 维护代码和发布新版 | [长期维护指南](docs/MAINTENANCE.md) |
 | 了解插件处理原理 | [技术说明](docs/TECHNICAL.md) |
 | 查看隐私承诺 | [隐私政策](PRIVACY.md) |
@@ -45,7 +46,7 @@ ZIP 和其他发行产物不直接提交进 Git，由 GitHub Release 长期保�
 
 - 版本：`0.1.0`
 - 状态：已在 Chrome 中重新加载，并由项目所有者于 2026-09-01 确认真正文章可以正常导出。
-- Chrome Web Store：项目所有者已于 2026-09-01 提交审核；审核结果待定，尚未确认发布。
+- Chrome Web Store：项目所有者于 2026-10-04 确认 `v0.1.0` 早已通过审核；确切批准日期、最终发布范围、商店安装链接及当前可安装状态仍待补证，因此不自动写成“已公开上架”。
 - Manifest：V3
 - 最低 Chrome 版本：114
 
